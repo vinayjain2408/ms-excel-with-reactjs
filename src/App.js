@@ -48,17 +48,20 @@
 
 
 
+
+
+
+
+
+
 // import React, { Component } from 'react';
 // import { EditorState, convertToRaw } from 'draft-js';
 // import { Editor } from 'react-draft-wysiwyg';
 // import draftToHtml from 'draftjs-to-html';
 
 // class EditorConvertToHTML extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       editorState: EditorState.createEmpty(),
-//     };
+//   state = {
+//     editorState: EditorState.createEmpty(),
 //   }
 
 //   onEditorStateChange = (editorState) => {
@@ -92,77 +95,79 @@
 
 
 
-
-
-
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-class EditorConvertToHTML extends Component {
-  state = {
-    editorState: EditorState.createEmpty(),
-  }
+function App() {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
-  onEditorStateChange = (editorState) => {
-    this.setState({
-      editorState,
-    });
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
   };
 
-  render() {
-    const { editorState } = this.state;
-    return (
-      <div>
-        <Editor
-          editorState={editorState}
-          wrapperClassName="demo-wrapper"
-          editorClassName="demo-editor"
-          onEditorStateChange={this.onEditorStateChange}
-        />
-        <textarea
-          disabled
-          value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Editor
+        editorState={editorState}
+        wrapperClassName="demo-wrapper"
+        editorClassName="demo-editor"
+        onEditorStateChange={onEditorStateChange}
+      />
+      <textarea
+        disabled
+        value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
+      />
+    </div>
+  );
 }
 
-export default EditorConvertToHTML;
+export default App;
 
 
 
 
 
-// import React, { useState } from 'react';
+// import React, { Component } from 'react';
 // import { EditorState, convertToRaw } from 'draft-js';
 // import { Editor } from 'react-draft-wysiwyg';
 // import draftToHtml from 'draftjs-to-html';
-// import htmlToDraft from 'html-to-draftjs';
 
-// function App() {
-//   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+// class EditorConvertToHTML extends Component {
+//   state = {
+//     editorState: EditorState.createEmpty(),
+//   }
 
-//   const onEditorStateChange = (editorState) => {
-//     setEditorState(editorState);
+//   onEditorStateChange = (editorState) => {
+//     this.setState({
+//       editorState,
+//     });
 //   };
 
-//   return (
-//     <div>
-//       <Editor
-//         editorState={editorState}
-//         wrapperClassName="demo-wrapper"
-//         editorClassName="demo-editor"
-//         onEditorStateChange={onEditorStateChange}
-//       />
-//       <textarea
-//         disabled
-//         value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-//       />
-//     </div>
-//   );
+//   render() {
+//     const { editorState } = this.state;
+//     return (
+//       <div>
+//         <Editor
+//           editorState={editorState}
+//           wrapperClassName="demo-wrapper"
+//           editorClassName="demo-editor"
+//           onEditorStateChange={this.onEditorStateChange}
+//         />
+//         <textarea
+//           disabled
+//           value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
+//         />
+//       </div>
+//     );
+//   }
 // }
 
-// export default App;
+// export default EditorConvertToHTML;
+
+
+
+
